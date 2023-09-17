@@ -30,7 +30,7 @@ class APIHomeController extends Controller
                 $query->select('products.id', 'title', 'description', 'featured_image_id')
                     ->with('featuredImage:image_path,product_id,is_featured');
             },
-        ])->select('combos.id', 'title', 'long_description', 'sale_price', 'category_id', 'featured_image')
+        ])->select('combos.id', 'title', 'long_description','combo_terms', 'sale_price', 'category_id', 'featured_image')
           ->find($id);
     
         if (!$combo) {
