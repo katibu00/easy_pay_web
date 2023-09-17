@@ -14,17 +14,22 @@ return new class extends Migration
         Schema::create('combos', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
-            $table->decimal('original_price', 10, 2);
-            $table->decimal('sale_price', 10, 2);
+            $table->text('short_description');
+            $table->longText('long_description');
+            $table->longText('combo_terms');
+            $table->decimal('original_price', 10, 2)->default(0.00);
+            $table->decimal('sale_price', 10, 2)->default(0.00);
+            $table->decimal('price_30', 10, 2)->nullable();
+            $table->decimal('price_60', 10, 2)->nullable();
+            $table->decimal('price_90', 10, 2)->nullable();
+            $table->decimal('price_125', 10, 2)->nullable();
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('location_id');
             $table->string('featured_image')->default('no-image.jpg');
             $table->timestamps();
-
+        
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->foreign('location_id')->references('id')->on('locations');
         });
+        
     }
 
     /**

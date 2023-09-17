@@ -22,7 +22,6 @@
                                 <th>Original Price</th>
                                 <th>Sale Price</th>
                                 <th>Category</th>
-                                <th>Location</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -30,11 +29,10 @@
                             @foreach ($combos as $combo)
                                 <tr>
                                     <td>{{ $combo->title }}</td>
-                                    <td>{!! $combo->description !!}</td>
-                                    <td>{{ $combo->original_price }}</td>
-                                    <td>{{ $combo->sale_price }}</td>
+                                    <td>{!! $combo->short_description !!}</td>
+                                    <td>{{ number_format($combo->original_price,0) }}</td>
+                                    <td>{{  number_format($combo->sale_price,0) }}</td>
                                     <td>{{ $combo->category->name }}</td>
-                                    <td>{{ $combo->location->name }}</td>
                                     <td>
                                         <a href="{{ route('combos.show', ['combo' => $combo->id]) }}"
                                             class="btn btn-primary btn-sm">View</a>

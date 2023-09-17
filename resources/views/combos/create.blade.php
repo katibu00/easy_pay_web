@@ -24,7 +24,6 @@
                         </div>
                     @endif
 
-
                     <form method="POST" action="{{ route('combos.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-body mt-4">
@@ -36,10 +35,31 @@
                                             <input type="text" name="title"
                                                 class="form-control @error('title') is-invalid @enderror" id="title" value="{{ old('title') }}" placeholder="Enter Combo title">
                                         </div>
-                                        <div class="form-group mb-2">
-                                            <label for="description">Combo Description</label>
-                                            <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
-                                                rows="5">{{ old('description') }}</textarea>
+
+                                        <div class="mb-3">
+                                            <label for="short_description" class="form-label">Short Description</label>
+                                            <input type="text" name="short_description" class="form-control @error('short_description') is-invalid @enderror" id="short_description" value="{{ old('short_description') }}" placeholder="Enter Short Description">
+                                            @error('short_description')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="long_description" class="form-label">Long Description</label>
+                                            <textarea name="long_description" id="long_description" class="form-control ckeditor @error('long_description') is-invalid @enderror" rows="5">{{ old('long_description') }}</textarea>
+                                            @error('long_description')
+                                                <div class="invalid-feedback">
+                                                    {{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        
+
+                                        <div class="mb-3">
+                                            <label for="combo_terms" class="form-label">Combo Terms</label>
+                                            <textarea name="combo_terms" id="combo_terms" class="form-control ckeditor">{{ old('combo_terms') }}</textarea>
                                         </div>
 
                                         <div id="product-rows">
@@ -49,7 +69,7 @@
                                                     <select name="product_id[]" class="form-select product-select">
                                                         <option value=""></option>
                                                         @foreach ($products as $product)
-                                                            <option value="{{ $product->id }}">{{ $product->title }}
+                                                            <option value="{{ $product->id }}" data-price="{{ $product->sale_price }}">{{ $product->title }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -67,7 +87,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                         
                                         </div>
                                         <button type="button" class="btn btn-success" id="add-new-row"><i
                                             class='bx bx-plus'></i>Add New Row</button>
@@ -81,7 +100,7 @@
                                                 <input type="number" name="original_price" step="any"
                                                     class="form-control @error('original_price') is-invalid @enderror"
                                                     id="original_price" value="{{ old('original_price') }}"
-                                                    placeholder="00.00">
+                                                    placeholder="00.00" readonly>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="sale_price" class="form-label">Sale Price</label>
@@ -90,7 +109,7 @@
                                                     id="sale_price" value="{{ old('sale_price') }}" placeholder="00.00">
                                             </div>
 
-                                            <div class="col-12">
+                                            <div class="col-12 mb-3">
                                                 <label for="category_id" class="form-label">Combo Category</label>
                                                 <select name="category_id"
                                                     class="form-select @error('category_id') is-invalid @enderror"
@@ -101,19 +120,27 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-12">
-                                                <label for="location_id" class="form-label">Location</label>
-                                                <select name="location_id"
-                                                    class="form-select @error('location_id') is-invalid @enderror"
-                                                    id="location_id" value="{{ old('location_id') }}">
-                                                    <option value=""></option>
-                                                    @foreach ($locations as $location)
-                                                        <option value="{{ $location->id }}">{{ $location->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
 
+                                            <div class="mb-3 row">
+                                                <div class="col-md-6">
+                                                    <label for="price_30" class="form-label">Price for 30 days</label>
+                                                    <input type="number" name="price_30" step="any" class="form-control" id="price_30" value="{{ old('price_30') }}" placeholder="00.00">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="price_60" class="form-label">Price for 60 days</label>
+                                                    <input type="number" name="price_60" step="any" class="form-control" id="price_60" value="{{ old('price_60') }}" placeholder="00.00">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <div class="col-md-6">
+                                                    <label for="price_90" class="form-label">Price for 90 days</label>
+                                                    <input type="number" name="price_90" step="any" class="form-control" id="price_90" value="{{ old('price_90') }}" placeholder="00.00">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="price_125" class="form-label">Price for 125</label>
+                                                    <input type="number" name="price_125" step="any" class="form-control" id="price_125" value="{{ old('price_125') }}" placeholder="00.00">
+                                                </div>
+                                            </div>
 
                                             <div class="col-12">
                                                 <label for="featured_image" class="form-label">Featured Image</label>
@@ -124,7 +151,6 @@
                                                     <input type="text" id="image-placeholder" class="form-control" placeholder="Upload a featured image" readonly>
                                                     <button type="button" class="btn btn-primary" id="upload-featured-image">Upload</button>
                                                 </div>
-                                                <!-- Display a placeholder image -->
                                             </div>
 
                                             <div class="col-12">
@@ -148,33 +174,32 @@
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 
     <script>
-        CKEDITOR.replace('description');
+        CKEDITOR.replace('long_description');
+        CKEDITOR.replace('combo_terms'); // Initialize CKEditor for combo_terms field
     </script>
 
-<script>
-    $(document).ready(function () {
-        // Event listener for the "Upload Featured Image" button
-        $('#upload-featured-image').click(function () {
-            $('#featured_image').click(); // Trigger the file input click
+    <script>
+        $(document).ready(function () {
+            // Event listener for the "Upload Featured Image" button
+            $('#upload-featured-image').click(function () {
+                $('#featured_image').click(); // Trigger the file input click
+            });
+
+            // Event listener for file input change
+            $('#featured_image').change(function () {
+                const input = $(this)[0];
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        // Display a thumbnail of the selected image in the placeholder
+                        $('#image-thumbnail').attr('src', e.target.result);
+                        $('#image-placeholder').val(input.files[0].name);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
         });
-
-        // Event listener for file input change
-        $('#featured_image').change(function () {
-            const input = $(this)[0];
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    // Display a thumbnail of the selected image in the placeholder
-                    $('#image-thumbnail').attr('src', e.target.result);
-                    $('#image-placeholder').val(input.files[0].name);
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        });
-    });
-</script>
-
-
+    </script>
 
     <script>
         $(document).ready(function() {
@@ -189,6 +214,7 @@
                 newRow.find('.quantity').val('1');
                 newRow.find('.remove-row').click(function() {
                     newRow.remove();
+                    calculateTotalPrice(); // Recalculate total price when a row is removed
                 });
                 productRows.append(newRow);
             }
@@ -201,7 +227,29 @@
             // Event listener for initial "Remove" buttons
             productRows.on('click', '.remove-row', function() {
                 $(this).closest('.product-row').remove();
+                calculateTotalPrice(); // Recalculate total price when a row is removed
             });
+
+            // Function to calculate total price
+            function calculateTotalPrice() {
+                let total = 0;
+                productRows.find('.product-row').each(function() {
+                    const quantity = $(this).find('.quantity').val();
+                    const price = parseFloat($(this).find('.product-select option:selected').data('price'));
+                    if (!isNaN(price) && !isNaN(quantity)) {
+                        total += price * quantity;
+                    }
+                });
+                $('#original_price').val(total.toFixed(2));
+            }
+
+            // Event listener for quantity change and product selection change
+            productRows.on('input', '.quantity, .product-select', function() {
+                calculateTotalPrice();
+            });
+
+            // Initial calculation of total price
+            calculateTotalPrice();
         });
     </script>
 @endsection

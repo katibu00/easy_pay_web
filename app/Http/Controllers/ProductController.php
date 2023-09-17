@@ -54,7 +54,7 @@ class ProductController extends Controller
 
             foreach ($request->file('images') as $index => $imageFile) {
                 $filename = time() . '_' . $imageFile->getClientOriginalName();
-                $imageFile->move(public_path('product_images'), $filename);
+                $imageFile->move(public_path('uploads'), $filename);
 
                 // Create a product image record
                 $productImage = new ProductImage();
