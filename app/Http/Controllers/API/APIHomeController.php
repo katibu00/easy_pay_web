@@ -10,10 +10,8 @@ class APIHomeController extends Controller
 
     public function getCombos()
     {
-        // Replace 'product_column_name' with the actual name column in your products table
-        $combos = Combo::select('id','title','description','sale_price','original_price','featured_image')->get();
+        $combos = Combo::select('id','title','short_description','sale_price','featured_image')->get();
     
-        // You can customize the response format as needed
         $response = [
             'success' => true,
             'message' => 'Combos with products fetched successfully',
