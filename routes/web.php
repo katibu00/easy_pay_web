@@ -5,6 +5,9 @@ use App\Http\Controllers\ComboController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StateController;
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\PickupCenterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,3 +48,9 @@ Route::prefix('combos')->middleware(['auth'])->group(function () {
     Route::put('/{combo}', [ComboController::class, 'update'])->name('combos.update');
     Route::delete('/{combo}', [ComboController::class, 'destroy'])->name('combos.destroy');
 });
+
+Route::resource('states', StateController::class);
+Route::resource('cities', CityController::class);
+Route::resource('pickup-centers', PickupCenterController::class);
+
+

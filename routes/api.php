@@ -28,4 +28,5 @@ Route::post('/login', [APIAuthController::class,'login']);
 Route::get('/combos', [APIHomeController::class,'getCombos']);
 Route::get('/combos/{id}', [APIHomeController::class,'showCombo']);
 
+Route::get('/get-locations', [APIHomeController::class,'fetchLocations']);
 

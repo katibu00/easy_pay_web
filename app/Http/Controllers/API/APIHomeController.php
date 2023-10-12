@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Combo;
+use App\Models\PickupCenter;
+use App\Models\State;
 
 class APIHomeController extends Controller
 {
@@ -40,5 +43,15 @@ class APIHomeController extends Controller
         return response()->json(['combo' => $combo], 200);
     }
     
-    
+
+    public function fetchLocations()
+    {
+        $states = State::with('cities.pickupCenters')
+        ->select(['id', 'name'])
+        ->get();
+
+        return response()->json(['states' => $states]);
+       
+    }
+
 }
