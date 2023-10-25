@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class APIOrderController extends Controller
 {
@@ -30,6 +31,12 @@ class APIOrderController extends Controller
 
         // $order->save();
 
-        return response()->json(['message' => 'Order placed successfully'], 201);
+        // return response()->json(['message' => 'Order placed successfully'], 201);
+        $userId = Auth::id();
+
+        $message = 'Order placed successfully. User ID: ' . $userId;
+
+        return response()->json(['message' => $message], 201);
+    
     }
 }
