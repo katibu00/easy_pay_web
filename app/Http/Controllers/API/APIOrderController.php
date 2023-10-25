@@ -18,8 +18,8 @@ class APIOrderController extends Controller
             'productId' => 'required|exists:combos,id',
             'paymentMode' => 'required|string',
             'paymentDuration' => 'required|string',
-            'addressState' => 'required|string',
-            'addressCity' => 'required|string',
+            'state' => 'required|string',
+            'city' => 'required|string',
         ]);
 
         if ($validator->fails()) {
