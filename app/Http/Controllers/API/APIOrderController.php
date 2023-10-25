@@ -13,13 +13,13 @@ class APIOrderController extends Controller
     public function placeOrder(Request $request)
     {
 
-        // $request->validate([
-        //     'setProductId' => 'required|exists:combos,id',
-        //     'setPaymentMode' => 'required|string',
-        //     'setPaymentDuration' => 'required|string',
-        //     'setAddressState' => 'required|string',
-        //     'setAddressCity' => 'required|string',
-        // ]);
+        $request->validate([
+            'productId' => 'required|exists:combos,id',
+            'paymentMode' => 'required|string',
+            'paymentDuration' => 'required|string',
+            'addressState' => 'required|string',
+            'addressCity' => 'required|string',
+        ]);
 
         // $order = new Order();
         // $order->order_number = uniqid(); 
