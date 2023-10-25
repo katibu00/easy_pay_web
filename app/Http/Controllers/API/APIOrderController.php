@@ -34,7 +34,7 @@ class APIOrderController extends Controller
         // return response()->json(['message' => 'Order placed successfully'], 201);
         $userId = Auth::id();
 
-        $message = 'Order placed successfully. Product ID: ' . $request->productId;
+        $message = 'Order placed successfully. Address: ' . $request->address;
 
         return response()->json(['message' => $message], 201);
     
