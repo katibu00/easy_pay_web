@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\APIAuthController;
 use App\Http\Controllers\API\APIHomeController;
+use App\Http\Controllers\API\APIOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,3 +31,6 @@ Route::get('/combos/{id}', [APIHomeController::class,'showCombo']);
 
 Route::get('/get-locations', [APIHomeController::class,'fetchLocations']);
 
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/place-order', [APIOrderController::class,'placeOrder']);
+});
