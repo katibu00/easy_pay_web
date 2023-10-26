@@ -31,6 +31,13 @@ class APIOrderController extends Controller
         }
 
         $userId = Auth::id();
+        $productId = $request->productId;
+        $existingOrder = Order::where('user_id', $userId)->where('combo_id', $productId)->first();
+
+        if ($existingOrder) {
+            $message = 'You have already placed an order for this product.';
+            return response()->json(['message' => $message], 400);
+        }
 
         $order = new Order();
         $order->order_number = uniqid(); 
