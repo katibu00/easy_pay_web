@@ -20,26 +20,36 @@ class APIOrderController extends Controller
             'paymentDuration' => 'required|string',
             'state' => 'required|string',
             'city' => 'required|string',
+            'streetAddress' => 'nullable|string',
+            'pickupLocation' => 'nullable|string',
+            'addressType' => 'nullable|string',
+            'town' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // $order = new Order();
-        // $order->order_number = uniqid(); 
-        // $order->combo_id = $request->input('setProductId');
-        // $order->user_id = auth()->user()->id;
-        // $order->status = 'pending';
-        // $order->state = $request->input('setAddressState');
-        // $order->city = $request->input('setAddressCity');
-
-        // $order->save();
-
-        // return response()->json(['message' => 'Order placed successfully'], 201);
         $userId = Auth::id();
 
-        $message = 'Order placed successfully. address type: ' . $request->addressType;
+        $order = new Order();
+        $order->order_number = uniqid(); 
+        $order->combo_id = $request->productId;
+        $order->user_id = $userId;
+        $order->status = 'pending';
+        $order->payment_mode = $request->paymentMode;
+        $order->payment_duration = $request->paymentDuration;
+        $order->state = $request->state;
+        $order->city = $request->city;
+        $order->address_type = $request->addressType;
+        $order->pickup_location = $request->pickupLocation;
+        $order->town = $request->town;
+        $order->street_address = $request->streetAddress;
+        $order->landmark = $request->landmark;
+
+        $order->save();
+       
+        $message = 'Order placed successfully.';
 
         return response()->json(['message' => $message], 201);
     

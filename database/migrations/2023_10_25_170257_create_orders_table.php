@@ -17,9 +17,15 @@ return new class extends Migration
             $table->unsignedBigInteger('combo_id');
             $table->unsignedBigInteger('user_id'); 
             $table->string('status')->default('pending');
+            $table->string('payment_mode');
+            $table->string('payment_duration');
+            $table->string('address_type');
             $table->string('state');
             $table->string('city');
-
+            $table->string('pickup_location')->nullable();
+            $table->string('town')->nullable();
+            $table->string('street_address')->nullable();
+            $table->string('landmark')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
