@@ -33,4 +33,5 @@ Route::get('/get-locations', [APIHomeController::class,'fetchLocations']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/place-order', [APIOrderController::class,'placeOrder']);
+    Route::get('/orders', [APIOrderController::class,'userOrderedCombos']);
 });

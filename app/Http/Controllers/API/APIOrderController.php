@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class APIOrderController extends Controller
 {
- 
+
     public function placeOrder(Request $request)
     {
 
@@ -40,7 +40,7 @@ class APIOrderController extends Controller
         }
 
         $order = new Order();
-        $order->order_number = uniqid(); 
+        $order->order_number = uniqid();
         $order->combo_id = $request->productId;
         $order->user_id = $userId;
         $order->status = 'pending';
@@ -55,10 +55,24 @@ class APIOrderController extends Controller
         $order->landmark = $request->landmark;
 
         $order->save();
-       
+
         $message = 'Order placed successfully.';
 
         return response()->json(['message' => $message], 201);
-    
+
     }
+
+   
+
+    public function userOrderedCombos(Request $request)
+    {
+        $userId = Auth::id();
+
+        $orders = Order::where('user_id', $userId)
+            ->with('combo:combo_id,title,featured_image')
+            ->get(['id', 'payment_mode', 'payment_duration']);
+
+        return response()->json(['orders' => $orders], 200);
+    }
+
 }
