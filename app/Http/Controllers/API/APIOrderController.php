@@ -62,16 +62,14 @@ class APIOrderController extends Controller
 
     }
 
-   
-
-    public function userOrderedCombos()
+    public function userOrderedCombos(Request $request)
     {
         $userId = Auth::id();
-    
+
         $orders = Order::where('user_id', $userId)
-            ->with('combo')
-            ->get();
-    
+            ->with('combo:id,title','featured_image') 
+            ->get(['id', 'payment_mode', 'payment_duration']);
+
         return response()->json(['orders' => $orders], 200);
     }
 
