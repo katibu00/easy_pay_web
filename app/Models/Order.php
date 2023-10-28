@@ -24,7 +24,6 @@ class Order extends Model
     }
     public function combo()
     {
-        return $this->belongsTo(Combo::class, 'combo_id');
+        return $this->belongsTo(Combo::class);
     }
-    
 }
