@@ -69,7 +69,7 @@ class APIOrderController extends Controller
         $userId = Auth::id();
 
         $orders = Order::where('user_id', $userId)
-            ->with('combo:combo_id,title,featured_image')
+            ->with('combo')
             ->get(['id', 'payment_mode', 'payment_duration']);
 
         return response()->json(['orders' => $orders], 200);
