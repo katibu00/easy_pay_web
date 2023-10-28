@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Combo;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -72,5 +73,25 @@ class APIOrderController extends Controller
 
         return response()->json(['orders' => $orders], 200);
     }
+
+
+    public function getOrderDetails($comboId)
+    {
+        $order = Order::where('id', $comboId)->first();
+
+        if (!$order) {
+            return response()->json(['message' => 'Order not found'], 404);
+        }
+
+        $combo = Combo::find($order->combo_id);
+
+        $data = [
+            'sale_price' => $combo->sale_price, 
+        ];
+
+        return response()->json($data);
+    }
+
+
 
 }
