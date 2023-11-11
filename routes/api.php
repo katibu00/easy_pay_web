@@ -37,3 +37,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/orders/{comboId}', [APIOrderController::class,'getOrderDetails']);
     
 });
+
+Route::get('/categories-with-combos', [APIHomeController::class, 'getAllCategoriesWithCombos']);
+

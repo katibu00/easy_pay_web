@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\City;
 use App\Models\Combo;
 use App\Models\PickupCenter;
@@ -52,6 +53,15 @@ class APIHomeController extends Controller
 
         return response()->json(['states' => $states]);
        
+    }
+
+
+    public function getAllCategoriesWithCombos()
+    {
+        // Fetch all categories with associated combos
+        $categoriesWithCombos = Category::with('combos')->get();
+
+        return response()->json($categoriesWithCombos, 200);
     }
 
 }
