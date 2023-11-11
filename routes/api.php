@@ -39,4 +39,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 Route::get('/categories-with-combos', [APIHomeController::class, 'getAllCategoriesWithCombos']);
+Route::get('/combos-by-category/{category}', [APIHomeController::class, 'getCombosByCategory']);
 

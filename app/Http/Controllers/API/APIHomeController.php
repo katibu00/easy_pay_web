@@ -58,10 +58,16 @@ class APIHomeController extends Controller
 
     public function getAllCategoriesWithCombos()
     {
-        // Fetch all categories with associated combos
         $categoriesWithCombos = Category::with('combos')->get();
 
         return response()->json($categoriesWithCombos, 200);
+    }
+
+    public function getCombosByCategory($category)
+    {
+        $combos = Combo::where('category_id', $category)->get();
+
+        return response()->json($combos, 200);
     }
 
 }
