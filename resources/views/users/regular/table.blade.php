@@ -32,8 +32,13 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->phone }}</td>
                 <td>{{ $userEmail }}</td>
-                <td>{{ $user->created_at->diffForHumans() }}</td>
-                <td>{{ $walletBalance }}</td>
+                <td>
+                    @if ($user->created_at)
+                        {{ $user->created_at->diffForHumans() }}
+                    @else
+                        N/A
+                    @endif
+                </td>                <td>{{ @$walletBalance }}</td>
                 <td>{{ @$numberOfFundings }}</td>
                 <td>{{ @$totalFundings }}</td>
                 <td>
