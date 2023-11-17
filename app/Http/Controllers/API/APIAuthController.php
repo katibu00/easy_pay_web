@@ -32,9 +32,6 @@ class APIAuthController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        // You can also generate an API token here if needed (e.g., for token-based authentication)
-
-        // Return a success response
         return response()->json(['message' => 'User registered successfully'], 201);
     }
 
@@ -82,6 +79,11 @@ class APIAuthController extends Controller
         ], 401);
     }
     
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
 
+        return response()->json(['message' => 'Logout successful']);
+    }
 
 }

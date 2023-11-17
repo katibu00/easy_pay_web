@@ -40,6 +40,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/wallet/balance', [APIWalletController::class, 'getWalletBalance']);
 
+    Route::post('/logout', [APIAuthController::class, 'logout']);
+
+
     
 });
 
