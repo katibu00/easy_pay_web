@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\APIAuthController;
 use App\Http\Controllers\API\APIHomeController;
 use App\Http\Controllers\API\APIOrderController;
+use App\Http\Controllers\API\APIWalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/place-order', [APIOrderController::class,'placeOrder']);
     Route::get('/orders', [APIOrderController::class,'userOrderedCombos']);
     Route::get('/orders/{comboId}', [APIOrderController::class,'getOrderDetails']);
+
+
+    Route::get('/wallet/balance', [APIWalletController::class, 'getWalletBalance']);
+
     
 });
 

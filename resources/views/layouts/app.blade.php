@@ -13,6 +13,7 @@
 	<link href="/admin/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
 	<link href="/admin/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet"/>
 	<!-- loader-->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link href="/admin/css/pace.min.css" rel="stylesheet"/>
 	<script src="/admin/js/pace.min.js"></script>
 	<!-- Bootstrap CSS -->

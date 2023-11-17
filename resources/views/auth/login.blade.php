@@ -15,6 +15,7 @@
 	<link href="/admin/css/pace.min.css" rel="stylesheet" />
 	<script src="/admin/js/pace.min.js"></script>
 	<!-- Bootstrap CSS -->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<link href="/admin/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/admin/css/bootstrap-extended.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">

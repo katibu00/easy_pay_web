@@ -8,6 +8,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\PickupCenterController;
+use App\Http\Controllers\UsersController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,15 @@ use App\Http\Controllers\PickupCenterController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if(Auth::user()){
+        
+        if(Auth::user()->user_type == 'admin')
+        {
+            return redirect()->route('home.admin');
+        }
+    }
+
+    return view('auth.login');
 });
 
 Route::get('/login', [LoginController::class,'index'])->name('login');
@@ -54,3 +64,15 @@ Route::resource('cities', CityController::class);
 Route::resource('pickup-centers', PickupCenterController::class);
 
 
+Route::group(['prefix' => 'users', 'middleware' => ['auth', 'admin']], function () {
+   
+    Route::get('/regular', [UsersController::class, 'regular'])->name('regular.index');
+    Route::get('/admins', [UsersController::class, 'admins'])->name('admins.index');
+    Route::post('/manual-funding', [UsersController::class, 'manualFunding'])->name('manual-funding');
+    Route::post('/change-password', [UsersController::class, 'changePassword'])->name('change-password');
+    Route::delete('/{id}',  [UsersController::class, 'destroy'])->name('users.destroy');
+
+    Route::post('/admin/submit',  [UsersController::class, 'storeAdmin'])->name('admin.store');
+
+
+});

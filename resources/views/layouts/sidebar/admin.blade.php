@@ -40,6 +40,17 @@
             <li> <a href="{{ route('pickup-centers.index') }}"><i class="bx bx-right-arrow-alt"></i>Pickup Centers</a></li>
         </ul>
     </li>
+    <li>
+        <a href="javascript:;" class="has-arrow">
+            <div class="parent-icon"><i class='bx bx-user'></i>
+            </div>
+            <div class="menu-title">Users</div>
+        </a>
+        <ul>
+            <li> <a href="{{ route('regular.index') }}"><i class="bx bx-right-arrow-alt"></i>Regular</a></li>
+            <li> <a href="{{ route('admins.index') }}"><i class="bx bx-right-arrow-alt"></i>Admins</a></li>
+        </ul>
+    </li>
  
     {{-- <li class="menu-label">UI Elements</li> --}}
 
