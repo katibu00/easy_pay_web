@@ -26,4 +26,9 @@ class Order extends Model
     {
         return $this->belongsTo(Combo::class);
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }
