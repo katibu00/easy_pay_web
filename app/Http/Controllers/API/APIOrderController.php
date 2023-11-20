@@ -8,7 +8,6 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Payment;
 
 class APIOrderController extends Controller
 {
@@ -75,7 +74,6 @@ class APIOrderController extends Controller
     //     return response()->json(['orders' => $orders], 200);
     // }
 
-
     // public function getOrderDetails($comboId)
     // {
     //     $order = Order::where('id', $comboId)->first();
@@ -87,57 +85,44 @@ class APIOrderController extends Controller
     //     $combo = Combo::find($order->combo_id);
 
     //     $data = [
-    //         'sale_price' => $combo->sale_price, 
+    //         'sale_price' => $combo->sale_price,
     //     ];
 
     //     return response()->json($data);
     // }
 
-
-
-
     public function fetchUserCombos()
     {
-        // Get the authenticated user
         $user = Auth::user();
-    
-        // Fetch all orders for the user with related combo information
+
         $userOrders = Order::with(['combo', 'payments'])
             ->where('user_id', $user->id)
             ->get();
-    
-        // Transform the data for display
+
         $combosData = $userOrders->map(function ($order) {
             $combo = $order->combo;
-    
-            // Get the last payment for the order
+
             $lastPayment = $order->payments->last();
-    
-            // Calculate next payment date based on the last payment or order date
+
             $nextPaymentDate = $lastPayment ? $lastPayment->created_at->addDays($order->payment_mode === 'weekly' ? 7 : 1)
-                : $order->created_at;
-    
-            // Calculate amount to pay and remaining balance
+            : $order->created_at;
+
             $amountToPay = $order->payment_duration === '30_day' ? $combo->price_30
-                : ($order->payment_duration === '60_day' ? $combo->price_60
-                    : ($order->payment_duration === '90_day' ? $combo->price_90 : $combo->price_125));
-    
-            $remainingBalance = $amountToPay - $order->total_paid;
-    
+            : ($order->payment_duration === '60_day' ? $combo->price_60
+                : ($order->payment_duration === '90_day' ? $combo->price_90 : $combo->price_125));
+
+            $remainingBalance = $order->combo->sale_price - $amountToPay;
+
             return [
-                'order_id' => $order->id, // Include the order ID
+                'order_id' => $order->id,
                 'combo_title' => $combo->title,
                 'next_payment_date' => $nextPaymentDate,
                 'amount_to_pay' => $amountToPay,
                 'remaining_balance' => $remainingBalance,
             ];
         });
-    
+
         return response()->json(['combos' => $combosData]);
     }
-    
-
-
-
 
 }
