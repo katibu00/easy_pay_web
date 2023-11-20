@@ -117,7 +117,7 @@ class APIOrderController extends Controller
     $payments = $order->payments;
 
     // Calculate progress
-    $totalAmountPaid = $payments->sum('amount_paid');
+    $totalAmountPaid = $payments->sum('amount');
     $progress = ($totalAmountPaid / $combo->sale_price) * 100;
 
     // Calculate next payment date based on the last payment or order date
