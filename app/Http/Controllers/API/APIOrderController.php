@@ -107,9 +107,9 @@ class APIOrderController extends Controller
             $nextPaymentDate = $lastPayment ? $lastPayment->created_at->addDays($order->payment_mode === 'weekly' ? 7 : 1)
                 : $order->created_at;
     
-            $amountToPay = $order->payment_duration === '30_day' ? $combo->price_30
-                : ($order->payment_duration === '60_day' ? $combo->price_60
-                    : ($order->payment_duration === '90_day' ? $combo->price_90 : $combo->price_125));
+            $amountToPay = $order->payment_duration === '30 days' ? $combo->price_30
+                : ($order->payment_duration === '60 days' ? $combo->price_60
+                    : ($order->payment_duration === '90 days' ? $combo->price_90 : $combo->price_125));
     
             // Calculate the total amount paid for the combo
             $totalPaid = $order->payments->sum('amount');
