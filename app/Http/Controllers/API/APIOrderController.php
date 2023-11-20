@@ -105,47 +105,60 @@ class APIOrderController extends Controller
 
 
     public function getOrderDetails($orderId)
-{
-    $order = Order::with(['combo', 'payments'])
-        ->find($orderId);
-
-    if (!$order) {
-        return response()->json(['error' => 'Order not found'], 404);
+    {
+        $order = Order::with(['combo', 'payments'])
+            ->find($orderId);
+    
+        if (!$order) {
+            return response()->json(['error' => 'Order not found'], 404);
+        }
+    
+        $combo = $order->combo;
+        $payments = $order->payments;
+    
+        // Calculate progress
+        $totalAmountPaid = $payments->sum('amount');
+        $progress = ($totalAmountPaid / $combo->sale_price) * 100;
+    
+        // Calculate next payment date based on the last payment or order date
+        $lastPayment = $payments->last();
+        $nextPaymentDate = $lastPayment ? $lastPayment->created_at->addDays($order->payment_mode === 'weekly' ? 7 : 1)
+            : $order->created_at;
+    
+        // Calculate amount to pay
+        $amountToPay = $order->payment_duration === '30 days' ? $combo->price_30
+                    : ($order->payment_duration === '60 days' ? $combo->price_60
+                        : ($order->payment_duration === '90 days' ? $combo->price_90 : $combo->price_125));
+    
+        // Calculate remaining balance
+        $remainingBalance = $combo->sale_price - $totalAmountPaid;
+    
+        // Fetch recent payments (let's say the last 5 payments)
+        $recentPayments = $payments->sortByDesc('created_at')->take(5);
+    
+        // Prepare payment history for the response
+        $paymentHistory = $recentPayments->map(function ($payment) {
+            return [
+                'payment_date' => $payment->created_at,
+                'amount_paid' => $payment->amount,
+                'date_paid' => $payment->created_at->format('Y-m-d'), // Adjust the date format as needed
+            ];
+        });
+    
+        return response()->json([
+            'progress' => $progress,
+            'combo_title' => $combo->title,
+            'next_payment_date' => $nextPaymentDate,
+            'amount_to_pay' => $amountToPay,
+            'total_amount_payable' => $combo->sale_price,
+            'total_amount_paid' => $totalAmountPaid,
+            'payment_duration' => $order->payment_duration,
+            'payment_mode' => $order->payment_mode,
+            'balance_remaining' => $remainingBalance,
+            'payment_history' => $paymentHistory,
+        ]);
     }
-
-    $combo = $order->combo;
-    $payments = $order->payments;
-
-    // Calculate progress
-    $totalAmountPaid = $payments->sum('amount');
-    $progress = ($totalAmountPaid / $combo->sale_price) * 100;
-
-    // Calculate next payment date based on the last payment or order date
-    $lastPayment = $payments->last();
-    $nextPaymentDate = $lastPayment ? $lastPayment->created_at->addDays($order->payment_mode === 'weekly' ? 7 : 1)
-        : $order->created_at;
-
-    // Calculate amount to pay
-    $amountToPay = $order->payment_duration === '30 days' ? $combo->price_30
-                : ($order->payment_duration === '60 days' ? $combo->price_60
-                    : ($order->payment_duration === '90 days' ? $combo->price_90 : $combo->price_125));
-
-    // Calculate remaining balance
-    $remainingBalance = $combo->sale_price - $totalAmountPaid;
-
-    return response()->json([
-        'progress' => $progress,
-        'combo_title' => $combo->title,
-        'next_payment_date' => $nextPaymentDate,
-        'amount_to_pay' => $amountToPay,
-        'total_amount_payable' => $combo->sale_price,
-        'total_amount_paid' => $totalAmountPaid,
-        'payment_duration' => $order->payment_duration,
-        'payment_mode' => $order->payment_mode,
-        'balance_remaining' => $remainingBalance,
-    ]);
-}
-
+    
     
 
 }
