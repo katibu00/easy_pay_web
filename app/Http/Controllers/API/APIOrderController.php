@@ -63,33 +63,6 @@ class APIOrderController extends Controller
 
     }
 
-    // public function userOrderedCombos(Request $request)
-    // {
-    //     $userId = Auth::id();
-
-    //     $orders = Order::select('id', 'combo_id', 'payment_mode', 'payment_duration')->where('user_id', $userId)
-    //         ->with(['combo:id,title,featured_image'])
-    //         ->get();
-
-    //     return response()->json(['orders' => $orders], 200);
-    // }
-
-    // public function getOrderDetails($comboId)
-    // {
-    //     $order = Order::where('id', $comboId)->first();
-
-    //     if (!$order) {
-    //         return response()->json(['message' => 'Order not found'], 404);
-    //     }
-
-    //     $combo = Combo::find($order->combo_id);
-
-    //     $data = [
-    //         'sale_price' => $combo->sale_price,
-    //     ];
-
-    //     return response()->json($data);
-    // }
 
     public function fetchUserCombos()
     {

@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\APIAuthController;
 use App\Http\Controllers\API\APIHomeController;
 use App\Http\Controllers\API\APIOrderController;
+use App\Http\Controllers\API\APIPaymentController;
 use App\Http\Controllers\API\APIWalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/wallet/balance', [APIWalletController::class, 'getWalletBalance']);
 
     Route::post('/logout', [APIAuthController::class, 'logout']);
+
+    Route::post('/make-payment', [APIPaymentController::class, 'makePayment']);
 
 
     
