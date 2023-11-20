@@ -94,25 +94,29 @@ class APIOrderController extends Controller
     public function fetchUserCombos()
     {
         $user = Auth::user();
-
+    
         $userOrders = Order::with(['combo', 'payments'])
             ->where('user_id', $user->id)
             ->get();
-
+    
         $combosData = $userOrders->map(function ($order) {
             $combo = $order->combo;
-
+    
             $lastPayment = $order->payments->last();
-
+    
             $nextPaymentDate = $lastPayment ? $lastPayment->created_at->addDays($order->payment_mode === 'weekly' ? 7 : 1)
-            : $order->created_at;
-
+                : $order->created_at;
+    
             $amountToPay = $order->payment_duration === '30_day' ? $combo->price_30
-            : ($order->payment_duration === '60_day' ? $combo->price_60
-                : ($order->payment_duration === '90_day' ? $combo->price_90 : $combo->price_125));
-
-            $remainingBalance = $order->combo->sale_price - $amountToPay;
-
+                : ($order->payment_duration === '60_day' ? $combo->price_60
+                    : ($order->payment_duration === '90_day' ? $combo->price_90 : $combo->price_125));
+    
+            // Calculate the total amount paid for the combo
+            $totalPaid = $order->payments->sum('amount');
+    
+            // Subtract the total amount paid from the combo sale price
+            $remainingBalance = $combo->sale_price - $totalPaid;
+    
             return [
                 'order_id' => $order->id,
                 'combo_title' => $combo->title,
@@ -121,8 +125,9 @@ class APIOrderController extends Controller
                 'remaining_balance' => $remainingBalance,
             ];
         });
-
+    
         return response()->json(['combos' => $combosData]);
     }
+    
 
 }
