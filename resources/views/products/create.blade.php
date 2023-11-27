@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('pageTitle','Create New Product')
 @section('css')
 <link href="/admin/plugins/Drag-And-Drop/dist/imageuploadify.min.css" rel="stylesheet" />
 @endsection

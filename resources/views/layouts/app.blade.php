@@ -26,7 +26,7 @@
 	{{-- <link rel="stylesheet" href="/admin/css/dark-theme.css"/> --}}
 	{{-- <link rel="stylesheet" href="/admin/css/semi-dark.css"/> --}}
 	{{-- <link rel="stylesheet" href="/admin/css/header-colors.css"/> --}}
-	<title>EasyPay - @yield('pageTitle')</title>
+	<title>@yield('pageTitle') - EasyPay Admin</title>
 	@yield('css')
 </head>
 
