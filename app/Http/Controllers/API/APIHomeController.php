@@ -32,10 +32,12 @@ class APIHomeController extends Controller
         $combo = Combo::with([
             'products' => function ($query) {
                 $query->select('products.id', 'title', 'description', 'featured_image_id')
-                    ->with('featuredImage:image_path,product_id,is_featured');
+                    ->with(['featuredImage' => function ($query) {
+                        $query->select('id', 'image_path', 'product_id', 'is_featured');
+                    }]);
             },
-        ])->select('combos.id', 'title', 'long_description','combo_terms', 'sale_price', 'category_id', 'featured_image', 'price_30', 'price_60', 'price_90')
-          ->find($id);
+        ])->select('combos.id', 'title', 'long_description', 'combo_terms', 'sale_price', 'category_id', 'featured_image', 'price_30', 'price_60', 'price_90')
+            ->find($id);
     
         if (!$combo) {
             return response()->json(['message' => 'Combo not found'], 404);
@@ -43,6 +45,7 @@ class APIHomeController extends Controller
     
         return response()->json(['combo' => $combo], 200);
     }
+    
     
 
     public function fetchLocations()
