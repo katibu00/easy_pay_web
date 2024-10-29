@@ -9,8 +9,8 @@ class Category extends Model
 {
     use HasFactory;
 
-    public function combos()
-    {
-        return $this->hasMany(Combo::class);
-    }
+    protected $fillable = [
+        'name',
+    ];
+   
 }

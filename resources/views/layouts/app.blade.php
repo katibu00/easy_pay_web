@@ -26,7 +26,7 @@
 	{{-- <link rel="stylesheet" href="/admin/css/dark-theme.css"/> --}}
 	{{-- <link rel="stylesheet" href="/admin/css/semi-dark.css"/> --}}
 	{{-- <link rel="stylesheet" href="/admin/css/header-colors.css"/> --}}
-	<title>@yield('pageTitle') - EasyPay Admin</title>
+	<title>@yield('pageTitle') - Marvenus</title>
 	@yield('css')
 </head>
 
@@ -37,10 +37,10 @@
 		<div class="sidebar-wrapper" data-simplebar="true">
 			<div class="sidebar-header">
 				<div>
-					<img src="/uploads/logo.jpg" class="logo-icon" alt="logo icon">
+					{{-- <img src="/uploads/logo.jpg" class="logo-icon" alt="logo icon"> --}}
 				</div>
 				<div>
-					<h4 class="logo-text">EasyPay</h4>
+					<h4 class="logo-text">Marvenus</h4>
 				</div>
 				<div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i>
 				</div>
@@ -187,7 +187,7 @@
 							<li>
 								<div class="dropdown-divider mb-0"></div>
 							</li>
-							<li><a class="dropdown-item" href="javascript:;"><i class='bx bx-log-out-circle'></i><span>Logout</span></a>
+							<li><a class="dropdown-item" href="{{ route('logout') }}"><i class='bx bx-log-out-circle'></i><span>Logout</span></a>
 							</li>
 						</ul>
 					</div>

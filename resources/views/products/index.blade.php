@@ -31,7 +31,6 @@
                                 <th>Sale Price</th>
                                 <th>Original Price</th>
                                 <th>Quantity In Stock</th>
-                                <th>Location</th>
                                 <th>Featured Image</th>
                                 <th>Actions</th>
                             </tr>
@@ -46,7 +45,6 @@
                                     <td>&#8358;{{ number_format($product->sale_price, 2) }}</td>
                                     <td>&#8358;{{ number_format($product->original_price, 2) }}</td>
                                     <td>{{ $product->quantity_in_stock }}</td>
-                                    <td>{{ $product->location->name }}</td>
                                     <td>
                                         @if ($product->featuredImage)
                                             <img src="{{ asset('uploads/' . $product->featuredImage->image_path) }}"

@@ -14,28 +14,12 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function location()
-    {
-        return $this->belongsTo(Location::class);
-    }
+   
 
     public function images()
     {
         return $this->hasMany(ProductImage::class);
     }
-
-    // public function featuredImage()
-    // {
-    //     return $this->hasOne(ProductImage::class)->where('is_featured', true);
-    // }
-    
-
-    public function combos()
-    {
-        return $this->belongsToMany(Combo::class)->withPivot('quantity');
-    }
-
-    // Product.php
 
     public function featuredImage()
     {

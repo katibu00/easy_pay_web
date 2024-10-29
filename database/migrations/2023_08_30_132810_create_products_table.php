@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('sale_price', 10, 2);
             $table->decimal('original_price', 10, 2);
-            $table->unsignedBigInteger('location_id');
             $table->unsignedBigInteger('featured_image_id')->nullable();
             $table->integer('quantity_in_stock');
             $table->unsignedBigInteger('category_id');

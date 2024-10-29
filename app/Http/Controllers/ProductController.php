@@ -17,7 +17,6 @@ class ProductController extends Controller
     public function create()
     {
         $data['categories'] = Category::all();
-        $data['locations'] = Location::all();
         return view('products.create', $data);
     }
 
@@ -30,7 +29,6 @@ class ProductController extends Controller
             'sale_price' => 'required|numeric',
             'original_price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
-            'location_id' => 'required|exists:locations,id',
             'quantity_in_stock' => 'required|integer',
             'images.*' => 'image|mimes:jpg,jpeg,png|max:1048',
 
@@ -44,7 +42,6 @@ class ProductController extends Controller
         $product->sale_price = $request->input('sale_price');
         $product->original_price = $request->input('original_price');
         $product->category_id = $request->input('category_id');
-        $product->location_id = $request->input('location_id');
         $product->quantity_in_stock = $request->input('quantity_in_stock');
         $product->save();
 
@@ -102,9 +99,8 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $categories = Category::all();
-        $locations = Location::all();
 
-        return view('products.edit', compact('product', 'categories', 'locations'));
+        return view('products.edit', compact('product', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -116,7 +112,6 @@ class ProductController extends Controller
             'sale_price' => 'required|numeric',
             'original_price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
-            'location_id' => 'required|exists:locations,id',
             'quantity_in_stock' => 'required|integer',
             'images.*' => 'image|mimes:jpg,jpeg,png|max:1048',
         ]);
@@ -135,7 +130,6 @@ class ProductController extends Controller
         $product->sale_price = $request->input('sale_price');
         $product->original_price = $request->input('original_price');
         $product->category_id = $request->input('category_id');
-        $product->location_id = $request->input('location_id');
         $product->quantity_in_stock = $request->input('quantity_in_stock');
 
         // Handle image uploads

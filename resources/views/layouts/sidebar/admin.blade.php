@@ -17,29 +17,15 @@
             <li> <a href="{{ route('products.create') }}"><i class="bx bx-right-arrow-alt"></i>New Product</a></li>
         </ul>
     </li>
+   
     <li>
-        <a href="javascript:;" class="has-arrow">
-            <div class="parent-icon"><i class='bx bx-cookie'></i>
+        <a href="{{ route('categories.index') }}">
+            <div class="parent-icon"><i class="bx bx-category"></i>
             </div>
-            <div class="menu-title">Combos</div>
+            <div class="menu-title">Categories</div>
         </a>
-        <ul>
-            <li> <a href="{{ route('combos.index') }}"><i class="bx bx-right-arrow-alt"></i>All Combos</a></li>
-            <li> <a href="{{ route('combos.create') }}"><i class="bx bx-right-arrow-alt"></i>New Combo</a></li>
-        </ul>
     </li>
-    <li>
-        <a href="javascript:;" class="has-arrow">
-            <div class="parent-icon"><i class='bx bx-map'></i>
-            </div>
-            <div class="menu-title">Locations</div>
-        </a>
-        <ul>
-            <li> <a href="{{ route('states.index') }}"><i class="bx bx-right-arrow-alt"></i>States</a></li>
-            <li> <a href="{{ route('cities.index') }}"><i class="bx bx-right-arrow-alt"></i>Cities</a></li>
-            <li> <a href="{{ route('pickup-centers.index') }}"><i class="bx bx-right-arrow-alt"></i>Pickup Centers</a></li>
-        </ul>
-    </li>
+
     <li>
         <a href="javascript:;" class="has-arrow">
             <div class="parent-icon"><i class='bx bx-user'></i>
@@ -47,12 +33,11 @@
             <div class="menu-title">Users</div>
         </a>
         <ul>
-            <li> <a href="{{ route('regular.index') }}"><i class="bx bx-right-arrow-alt"></i>Regular</a></li>
+            {{-- <li> <a href="{{ route('regular.index') }}"><i class="bx bx-right-arrow-alt"></i>Regular</a></li> --}}
             <li> <a href="{{ route('admins.index') }}"><i class="bx bx-right-arrow-alt"></i>Admins</a></li>
         </ul>
     </li>
  
-    {{-- <li class="menu-label">UI Elements</li> --}}
 
 
 </ul>

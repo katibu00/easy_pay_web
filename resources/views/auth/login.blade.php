@@ -21,7 +21,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 	<link href="/admin/css/app.css" rel="stylesheet">
 	<link href="/admin/css/icons.css" rel="stylesheet">
-	<title>Easy - Login</title>
+	<title>Marvenus - Login</title>
 </head>
 
 <body class="bg-login">
@@ -32,7 +32,7 @@
 				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
 					<div class="col mx-auto">
 						<div class="mb-4 text-center">
-							<img src="/uploads/logo.jpg" width="50" alt="Logo" />EasyPay
+							Marvenus
 						</div>
 						<div class="card">
 							<div class="card-body">
@@ -119,8 +119,6 @@
 	<!--app JS-->
 
     <script>
-           
-    
         $(document).ready(function() {
          $('#login-form').submit(function(event) {
              event.preventDefault();

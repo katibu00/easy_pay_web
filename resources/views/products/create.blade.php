@@ -74,15 +74,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-12">
-                                            <label for="location_id" class="form-label">Location</label>
-                                            <select name="location_id" class="form-select @error('location_id') is-invalid @enderror" id="location_id" value="{{ old('location_id') }}">
-                                                <option value=""></option>
-                                                @foreach ($locations as $location)
-                                                    <option value="{{ $location->id }}">{{ $location->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                       
               
                                         <div class="col-12">
                                             <div class="d-grid">
